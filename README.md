@@ -19,9 +19,11 @@
 > **💡 如何获取 Discord Token？**
 > 1. 在电脑浏览器中登录 [Discord 网页版](https://discord.com/app)。
 > 2. 按 `F12` 打开开发者工具，切换到 **Network (网络)** 面板。
-> 3. 在 Discord 页面中随便点击一个服务器或频道来产生网络活动。
-> 4. 在 Network 列表里随便点开一个名为 `science` 或其他相关的请求。
-> 5. 在右侧的 **Headers (标头)** -> **Request Headers (请求标头)** 中，找到 `Authorization` 字段，对应的那一长串字符就是你的 Token（不需要加 `"` 双引号）。请妥善保管，**千万不要直接发给任何人数**！
+> 3. **关键步骤**：在 Network 面板的过滤选项卡中，选中 **"Fetch/XHR"**。
+> 4. 保持面板打开，回到 Discord 页面并**随便点击左侧的其他服务器或频道**。
+> 5. 这时 Network 列表会出现一些名为 `science`、`messages` 或 `typing` 的请求记录，随便点开其中一个。
+> 6. 在右侧弹出的 **Headers (标头)** 标签页里向下滑，找到 **Request Headers (请求标头)** 区域。
+> 7. 在里面寻找名叫 `Authorization` 的字段，它后面的那一串复杂字符就是您的 Token！直接复制下来即可。
 
 ### 3️⃣ 启用 Actions
 
