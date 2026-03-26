@@ -243,11 +243,34 @@ test('FreezeHost 自动续期', async () => {
                 console.log('📤 点击 Login with Discord...');
                 await page.click('span.text-lg:has-text("Login with Discord")');
 
+                console.log('⏳ 检测并关闭 Cookie 同意弹窗...');
+                try {
+                    // FundingChoices / Google CMP 弹窗
+                    const cookieAcceptSelectors = [
+                        'button.fc-cta-consent',
+                        'button.fc-button-label',
+                        '[aria-label="Consent"]',
+                        'button:has-text("同意")',
+                        'button:has-text("Accept")',
+                        'button:has-text("Agree")',
+                        'button:has-text("OK")',
+                    ];
+                    for (const sel of cookieAcceptSelectors) {
+                        const btn = page.locator(sel).first();
+                        if (await btn.isVisible({ timeout: 1000 }).catch(() => false)) {
+                            await btn.click({ force: true });
+                            console.log(`  ✅ 已关闭 Cookie 弹窗 (${sel})`);
+                            await page.waitForTimeout(500);
+                            break;
+                        }
+                    }
+                } catch { /* 没有弹窗或已关闭，继续 */ }
+
                 console.log('⏳ 等待服务条款弹窗...');
                 const confirmBtn = page.locator('button#confirm-login');
                 await confirmBtn.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
                 if (await confirmBtn.isVisible()) {
-                    await confirmBtn.click();
+                    await confirmBtn.click({ force: true });
                     console.log('✅ 已接受服务条款');
                 }
 
